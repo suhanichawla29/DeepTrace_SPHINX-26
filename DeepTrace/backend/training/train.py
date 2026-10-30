@@ -161,9 +161,11 @@ def run_training(
         val_data = val_data.with_transform(preprocess_eval)
 
     def collate_fn(batch):
+        # ImageFolder: fake=0, real=1; intended: REAL=0, FAKE=1
+        labels = torch.tensor([1 - x["label"] for x in batch])
         return {
             "pixel_values": torch.stack([x["pixel_values"] for x in batch]),
-            "labels": torch.tensor([x["label"] for x in batch]),
+            "labels": labels,
         }
 
     # 5. Configure Training Arguments
@@ -177,7 +179,7 @@ def run_training(
         num_train_epochs=num_train_epochs,
         weight_decay=weight_decay,
         gradient_accumulation_steps=gradient_accumulation_steps,
-        evaluation_strategy="epoch" if val_data else "no",
+        eval_strategy="epoch" if val_data else "no",
         save_strategy="epoch" if val_data else "no",
         load_best_model_at_end=True if val_data else False,
         metric_for_best_model="f1_macro" if val_data else None,

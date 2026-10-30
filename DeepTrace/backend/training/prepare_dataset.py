@@ -231,6 +231,27 @@ class DatasetPreparer:
             for item in items:
                 batches.setdefault(item["batch_id"], []).append(item)
 
+            # Chunk oversized batches so a single flat folder (or very large
+            # batch) does not collapse an entire class into one split. Smaller
+            # batches (<= 100 images) keep their original grouping for leakage
+            # prevention; larger ones are deterministically sub-divided.
+            if len(batches) <= 1:
+                chunk_size = 1
+            else:
+                chunk_size = 100
+            chunked_batches: Dict[str, List[Dict[str, Any]]] = {}
+            for key, batch_items in batches.items():
+                if len(batch_items) <= chunk_size:
+                    chunked_batches[key] = batch_items
+                else:
+                    shuffled_items = list(batch_items)
+                    rng.shuffle(shuffled_items)
+                    for offset in range(0, len(shuffled_items), chunk_size):
+                        chunked_batches[f"{key}__{offset // chunk_size}"] = shuffled_items[
+                            offset : offset + chunk_size
+                        ]
+            batches = chunked_batches
+
             batch_keys = list(batches.keys())
             rng.shuffle(batch_keys)
 
@@ -317,6 +338,8 @@ class DatasetPreparer:
         with open(manifest_path, "w", encoding="utf-8") as f:
             json.dump({
                 "project": "DeepTrace SPHINX-26",
+                "label_mapping": {"0": "REAL", "1": "FAKE"},
+                "label_index": {"REAL": 0, "FAKE": 1},
                 "total_images": len(manifest),
                 "splits_summary": {
                     s: {c: len(splits[s][c]) for c in ["real", "fake"]}
