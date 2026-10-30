@@ -162,3 +162,4 @@ if __name__ == "__main__":
 
     exit_code = run_test(args.image_path)
     sys.exit(exit_code)
+

@@ -265,3 +265,4 @@ def get_image_detector(
 ) -> ImageDetector:
     """Convenience helper to access the singleton ImageDetector instance."""
     return ImageDetector.get_instance(model_id=model_id)
+
