@@ -153,3 +153,4 @@ export default function UploadZone({ onFileSelect, disabled = false }) {
     </div>
   );
 }
+

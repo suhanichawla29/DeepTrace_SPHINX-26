@@ -30,3 +30,4 @@ export default function StatusBadge({ status = 'available', label, showDot = tru
     </span>
   );
 }
+

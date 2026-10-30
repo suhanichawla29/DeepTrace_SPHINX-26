@@ -195,3 +195,4 @@ export async function analyzeImage(file, signal) {
 }
 
 export { API_BASE_URL, DETECT_ENDPOINT, HEALTH_ENDPOINT };
+
