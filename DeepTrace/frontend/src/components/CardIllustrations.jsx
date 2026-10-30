@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Mic, FileText, CheckCircle2, ShieldCheck, Waves } from 'lucide-react';
+import { Play, FileText, Waves } from 'lucide-react';
 
 /**
  * Card 1: Image Detection Visual Illustration

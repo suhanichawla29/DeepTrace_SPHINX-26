@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronRight,
   ArrowLeft,
   ScanEye,
   Sparkles,
-  Info,
   Server,
-  AlertCircle,
   HelpCircle,
-  CheckCircle2,
   RefreshCw,
 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
@@ -28,6 +25,13 @@ export default function ImageDetection() {
   const [isCheckingHealth, setIsCheckingHealth] = useState(false);
   const abortControllerRef = useRef(null);
 
+  const checkHealth = useCallback(async () => {
+    setIsCheckingHealth(true);
+    const health = await checkBackendHealth();
+    setHealthStatus(health);
+    setIsCheckingHealth(false);
+  }, []);
+
   // Check backend health on initial page load
   useEffect(() => {
     checkHealth();
@@ -36,17 +40,7 @@ export default function ImageDetection() {
         abortControllerRef.current.abort();
       }
     };
-  }, []);
-
-  const checkHealth = async () => {
-    setIsCheckingHealth(true);
-    const health = await checkBackendHealth();
-    setHealthStatus(health);
-    setIsCheckingHealth(false);
-    if (!health.online && result === null) {
-      // Note: we only flag backendOffline on analyze or if explicitly offline
-    }
-  };
+  }, [checkHealth]);
 
   const handleFileSelect = (file) => {
     // Clear previous results and errors when a new image is selected

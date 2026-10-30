@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, ArrowUpRight, ShieldAlert, Cpu, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Cpu, Sparkles } from 'lucide-react';
 
 export default function Hero() {
   const scrollToModules = () => {
