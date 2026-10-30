@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ScanEye, Cpu, ShieldCheck, ArrowRight, Layers, Lock, Sparkles } from 'lucide-react';
+import { ScanEye, ArrowRight } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function About() {

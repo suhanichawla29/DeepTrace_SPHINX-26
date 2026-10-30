@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { History as HistoryIcon, ArrowLeft, Database, ShieldAlert, Sparkles } from 'lucide-react';
+import { History as HistoryIcon, ArrowLeft, Database } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function History() {

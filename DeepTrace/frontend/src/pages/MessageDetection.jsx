@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, ArrowLeft, FileText, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function MessageDetection() {

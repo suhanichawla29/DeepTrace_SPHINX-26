@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AudioWaveform, ArrowLeft, Mic, Sparkles, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { AudioWaveform, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function AudioDetection() {
