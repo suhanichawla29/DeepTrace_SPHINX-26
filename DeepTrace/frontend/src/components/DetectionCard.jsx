@@ -1,23 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Lock } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 
 /**
  * DetectionCard component representing one of the 4 detection vectors.
- * 
- * @param {Object} props
- * @param {string} props.id - 'image' | 'audio' | 'video' | 'message'
- * @param {React.ReactNode} props.icon - Lucide icon component
- * @param {string} props.title - Module title
- * @param {string} props.description - Module description
- * @param {'available' | 'coming-soon'} props.availability - Status
- * @param {string} props.actionText - CTA label
- * @param {string} props.path - Navigation route
- * @param {React.ReactNode} props.illustration - Visual illustration component
  */
 export default function DetectionCard({
-  id,
   icon,
   title,
   description,
