@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { X, RefreshCw, FileImage, Maximize2, CheckCircle2 } from 'lucide-react';
+import { X, RefreshCw, FileImage, CheckCircle2 } from 'lucide-react';
 
 /**
  * ImagePreview component showing selected file preview, metadata, and replace/remove actions.

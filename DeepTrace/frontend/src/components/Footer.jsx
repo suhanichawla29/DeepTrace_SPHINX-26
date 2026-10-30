@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ScanEye, ShieldCheck, Cpu } from 'lucide-react';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2026;
 
   return (
     <footer className="footer-wrapper">
