@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeepTraceDatasetManifest",
+  "description": "Metadata manifest schema for DeepTrace AI-generated vs real image training datasets",
+  "metadata": {
+    "project": "DeepTrace SPHINX-26",
+    "dataset_version": "v1.0",
+    "target_counts": {
+      "train": { "real": 4000, "fake": 4000 },
+      "validation": { "real": 500, "fake": 500 },
+      "test": { "real": 1000, "fake": 1000 }
+    },
+    "label_mapping": {
+      "0": "REAL",
+      "1": "FAKE"
+    }
+  },
+  "examples": [
+    {
+      "image_id": "sha256_9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+      "relative_path": "train/fake/flux_portrait_00124.jpg",
+      "label": "FAKE",
+      "source_dataset": "Custom-FLUX",
+      "generator_family": "FLUX.1-schnell",
+      "batch_id": "flux_batch_202610_portrait",
+      "split": "train",
+      "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+      "dimensions": [1024, 1024],
+      "format": "JPEG",
+      "held_out_generator": false
+    },
+    {
+      "image_id": "sha256_5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "relative_path": "train/real/coco_val2017_000000000139.jpg",
+      "label": "REAL",
+      "source_dataset": "MS-COCO-2017",
+      "generator_family": "authentic_sensor",
+      "batch_id": "coco_val2017",
+      "split": "train",
+      "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "dimensions": [640, 426],
+      "format": "JPEG",
+      "held_out_generator": false
+    },
+    {
+      "image_id": "sha256_4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "relative_path": "test/fake/sdxl_landscape_00450.png",
+      "label": "FAKE",
+      "source_dataset": "GenImage",
+      "generator_family": "Stable-Diffusion-XL",
+      "batch_id": "genimage_sdxl_batch_04",
+      "split": "test",
+      "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "dimensions": [1024, 1024],
+      "format": "PNG",
+      "held_out_generator": true
+    }
+  ]
+}
+

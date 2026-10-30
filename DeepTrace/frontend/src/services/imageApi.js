@@ -1,13 +1,13 @@
 /**
  * DeepTrace Image Detection API Client
  * 
- * Manages communication with the DeepTrace backend API.
- * Designed to connect to the FastAPI inference service when deployed,
- * with strict validation, network failure handling, and zero fabricated data.
+ * Manages communication with the DeepTrace FastAPI backend API.
+ * Connects to the inference service at http://127.0.0.1:8001 with strict schema
+ * validation, network failure handling, and zero fabricated data.
  */
 
-// Configurable API base URL and detection endpoint
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
+// Configurable API base URL (defaults to http://127.0.0.1:8001)
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001').replace(/\/+$/, '');
 const DETECT_ENDPOINT = '/api/detect/image';
 const HEALTH_ENDPOINT = '/api/health';
 
@@ -26,8 +26,9 @@ export class ApiError extends Error {
 
 /**
  * Checks if the backend API server is reachable and online.
+ * Dispatches GET /api/health to the configured FastAPI service.
  * 
- * @returns {Promise<{ online: boolean, message: string, url: string }>}
+ * @returns {Promise<{ online: boolean, message: string, url: string, data?: Object, error?: string }>}
  */
 export async function checkBackendHealth() {
   const targetUrl = `${API_BASE_URL}${HEALTH_ENDPOINT}`;
@@ -62,7 +63,7 @@ export async function checkBackendHealth() {
     if (err.name === 'AbortError') {
       reason = 'Backend connection timed out (server unreachable).';
     } else if (err.message && err.message.includes('Failed to fetch')) {
-      reason = 'Connection refused. The backend service is not running on port 8000.';
+      reason = `Connection refused. The backend service is not reachable at ${API_BASE_URL}.`;
     }
 
     return {
@@ -81,8 +82,8 @@ export async function checkBackendHealth() {
  *   predicted_label: "REAL" | "FAKE",
  *   confidence: number,
  *   scores: { REAL: number, FAKE: number },
- *   model_id?: string,
- *   device?: string,
+ *   model_id: string,
+ *   device: string,
  *   processing_time_ms?: number
  * }
  */
@@ -123,7 +124,8 @@ function validateDetectionResponse(data) {
 
 /**
  * Submits an image file to the backend for real AI classification.
- * Strictly uses FormData and never generates or returns mock/fake data.
+ * Strictly uses FormData with field name 'file' and never sets Content-Type
+ * manually so the browser automatically appends the multipart boundary.
  * 
  * @param {File} file - The image file to analyze
  * @param {AbortSignal} [signal] - Optional abort signal
@@ -136,11 +138,13 @@ export async function analyzeImage(file, signal) {
 
   const endpointUrl = `${API_BASE_URL}${DETECT_ENDPOINT}`;
   const formData = new FormData();
+  // Field name 'file' matching FastAPI endpoint: file: UploadFile = File(...)
   formData.append('file', file, file.name);
 
   const startTime = performance.now();
 
   try {
+    // Note: Do not set 'Content-Type' header; browser sets multipart/form-data boundary automatically
     const response = await fetch(endpointUrl, {
       method: 'POST',
       body: formData,
@@ -186,7 +190,7 @@ export async function analyzeImage(file, signal) {
 
     // Network level error (server down, CORS failure, connection refused)
     throw new ApiError(
-      'Unable to connect to the DeepTrace backend API. The service may be offline or not yet running.',
+      `Unable to connect to the DeepTrace backend API at ${API_BASE_URL}. The service may be offline or not yet running.`,
       null,
       'NETWORK_ERROR',
       err.message
@@ -195,4 +199,3 @@ export async function analyzeImage(file, signal) {
 }
 
 export { API_BASE_URL, DETECT_ENDPOINT, HEALTH_ENDPOINT };
-

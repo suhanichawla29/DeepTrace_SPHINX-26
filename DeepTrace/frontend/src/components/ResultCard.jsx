@@ -171,19 +171,14 @@ export default function ResultCard({
       <div className="result-verdict-summary">
         <p className="verdict-lead">
           {isReal
-            ? 'The model classified this image as real.'
-            : 'The model classified this image as AI-generated.'}
-        </p>
-        <p className="verdict-detail">
-          {isReal
-            ? 'Visual texture distributions and high-frequency spectral patterns conform to authentic photographic sensor capture.'
-            : 'Detected structural patch inconsistencies, diffusion grid artifacts, and signature synthetic frequency patterns.'}
+            ? 'The model classified this image as real based on its learned visual patterns.'
+            : 'The model classified this image as AI-generated based on its learned visual patterns.'}
         </p>
       </div>
 
       {/* Class Probabilities Comparison Meters */}
       <div className="result-probabilities-card">
-        <h4 className="probabilities-heading">Calibrated Model Probabilities</h4>
+        <h4 className="probabilities-heading">Model Prediction Scores</h4>
 
         {/* Real Class Meter */}
         <div className="probability-item">
@@ -242,7 +237,7 @@ export default function ResultCard({
       <div className="result-disclaimer-box">
         <Info size={15} className="disclaimer-icon" />
         <p className="disclaimer-text">
-          <strong>Notice:</strong> AI detection results are model predictions, not definitive proof of authenticity. Probabilistic scores indicate statistical likelihood based on the CIFAKE evaluation dataset.
+          <strong>Notice:</strong> These scores are model predictions, not definitive proof of authenticity. The displayed confidence is a softmax score and may not represent a calibrated probability.
         </p>
       </div>
     </div>
