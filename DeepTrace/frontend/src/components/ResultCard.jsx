@@ -5,12 +5,9 @@ import {
   Cpu,
   Clock,
   Info,
-  CheckCircle2,
   ServerOff,
   RefreshCw,
-  ExternalLink,
 } from 'lucide-react';
-import StatusBadge from './StatusBadge';
 
 /**
  * ResultCard component presenting AI classification findings with zero fabricated data.

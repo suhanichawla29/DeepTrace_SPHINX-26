@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Video, ArrowLeft, Film, PlayCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Video, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function VideoDetection() {
